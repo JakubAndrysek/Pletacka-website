@@ -116,25 +116,3 @@
 ?>
 
 
-<!DOCTYPE html>
-<html lang="cz">
-<head>
-
-
-</head>
-<body>
-
-<?php
-//echo getSettings("web_name");
-//echo "Pocet: ". getCountByName("sensors", "name", "pletacka1");
-
-//echo sensorIsExist("pleat");
-
-//echo "Poc: " . tableIsExist("sen1");;
-
-//echo "pocwt: " . getCount("sensors");
-
-?>
-
-</body>
-</html>
