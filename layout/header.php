@@ -19,15 +19,15 @@
 
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
       <!-- Brand/logo -->
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="index.php">
           <img src="images\Kolo.png" alt="logo" style="width:40px;">
       </a>
-      <a class="navbar-brand" href="#"><?php echo getSettings("web_name");?></a>
+      <a class="navbar-brand" href="index.php"><?php echo getSettings("web_name");?></a>
       
       <!-- Links -->
       <ul class="navbar-nav">
           <li class="nav-item">
-          <a class="nav-link" href="#">Link 1</a>
+          <a class="nav-link" href="sensors.php">Sensors</a>
           </li>
           <li class="nav-item">
           <a class="nav-link" href="#">Link 2</a>

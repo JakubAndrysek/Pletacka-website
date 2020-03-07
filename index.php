@@ -37,7 +37,7 @@
 
 
 
-<div class="container-fluid text-center p-4 bg-primary text-white" </div>
+<div class="container-fluid x p-4 bg-primary text-white" </div>
     <h1 class="display-4">
         <?php  echo getSettings("work_shift_A");?>
     </h2>

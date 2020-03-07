@@ -1,8 +1,8 @@
 <?php
-
+    //  Get settings from database table "setings"
     function getSettings($parameter)
     {
-        require "php\database_connect.php";
+        require "database_connect.php";
 
         $sql = "SELECT  $parameter  FROM settings";
         
@@ -16,9 +16,10 @@
         return $output;
     }
 
+    //Print table with all sensors
     function printSensors()
     {
-        require "php\database_connect.php";
+        require "database_connect.php";
 
         $sql = "SELECT id, name, description FROM sensors";
         $result = $mysqli->query($sql);
@@ -33,16 +34,84 @@
         } else {
             echo "0 results";
         }
+        $result->close();
         
+    }   
+
+    //Get count of rows in the table
+    function getCount($table)
+    {
+        require "database_connect.php";
+
+        $sql = "SELECT COUNT(*) FROM $table ";
+        
+        $result = $mysqli->prepare($sql);
+        $result->execute();
+        $result->store_result();
+        $result->bind_result($output);
+        $result->fetch();
+        $result->close();
+        return $output;
     }    
 
+    //Get count of rows with same values
+    function getCountByName($table, $columnName, $value)
+    {
+        require "database_connect.php";
+
+        $sql = "SELECT COUNT(*) FROM $table WHERE $columnName = ?";
+        
+        $result = $mysqli->prepare($sql);
+        $result->bind_param("s", $value);
+        $result->execute();
+        $result->store_result();
+        $result->bind_result($output);
+        $result->fetch();
+        $result->close();
+        return $output;
+    }
     
+    //Return 1 ii sensor exist
+    function sensorIsExist($name)
+    {
+        if (getCountByName("sensors", "name", $name)>0)
+        {
+            return 1;
+        }
+        else 
+        {
+            return 0;
+        }
+    }
+    
+    //Return 1 if table exist
+    function tableIsExist($from)
+    {
+        require "database_connect.php";
 
+        $sql = "SELECT COUNT(*) FROM $from";
 
+        if ($mysqli->query($sql) === FALSE) {
+            $error = $mysqli->error;
+            if(strstr($error, "doesn't exist"))
+            {
+                //echo "No exist";
+                $output = 0;
+            }
+            else
+            {
+                echo "Error creating table: " . $error . "<br>";
+            }
+        }
+        else
+        {
+            //echo "Exist";
+            $output = 1;
+        }
 
-
-
-
+        return $output;
+        
+    }      
 
 ?>
 
@@ -57,7 +126,13 @@
 
 <?php
 //echo getSettings("web_name");
+//echo "Pocet: ". getCountByName("sensors", "name", "pletacka1");
 
+//echo sensorIsExist("pleat");
+
+//echo "Poc: " . tableIsExist("sen1");;
+
+//echo "pocwt: " . getCount("sensors");
 
 ?>
 
