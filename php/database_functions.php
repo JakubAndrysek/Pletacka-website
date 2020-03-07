@@ -100,7 +100,7 @@
             }
             else
             {
-                echo "Error creating table: " . $error . "<br>";
+                echo "Error: " . $error . "<br>";
             }
         }
         else

@@ -50,6 +50,7 @@ function insertSensor()
     require "../../php/database_connect.php";
     require "../../php/database_functions.php";
     $status = 0;
+    $error = "";
 
     if(!sensorIsExist($data["sensor_name"]))
     {
@@ -65,6 +66,7 @@ function insertSensor()
         else
         {
             $status = 0;
+            $error .= "Sensor is not created in SENSORS";
         }
         $result->close();
 
@@ -81,11 +83,18 @@ function insertSensor()
                 $status = 1;
             } else {
                 $status = 0;
+                $error .= "Table is not created";
             }   
         }
         else {
             $status = 0;
+            $error .= "Table is already exist";
         }
+    }
+    else
+    {
+        $status = 0; 
+        $error .= "Sensor is already exist in SENSORS";
     }
 
     if($status)
@@ -99,7 +108,7 @@ function insertSensor()
     {
         $response=array(
             'status' => 0,
-            'status_message' =>'Sensor Updation Failed.'
+            'status_message' =>$error
         );
     }
 
@@ -111,10 +120,10 @@ function insertSensor()
 function deleteSensor()
 {
     $data = json_decode(file_get_contents('php://input'), true);
-
     require "../../php/database_connect.php";
     require "../../php/database_functions.php";
     $status = 0;
+    $error = "";
 
     if(sensorIsExist($data["sensor_name"]))
     {
@@ -130,6 +139,7 @@ function deleteSensor()
         else
         {
             $status = 0;
+            $error .= "Removing Sensor from SENSORS Failed";
         }
         $result->close();
 
@@ -141,11 +151,17 @@ function deleteSensor()
                 $status = 1;
             } else {
                 $status = 0;
+                $error .= "Droping table Failed";
             }   
         }
         else {
             $status = 0;
+            $error .= "Table is not exist - Failed";
         }
+    }
+    else
+    {
+        $error .= "Sensor is not exist - Failed";
     }
 
     if($status)
@@ -159,7 +175,7 @@ function deleteSensor()
     {
         $response=array(
             'status' => 0,
-            'status_message' =>'Removing Sensor Failed.'
+            'status_message' => $error
         );
     }
 
@@ -178,24 +194,19 @@ switch($request_method)
 			if(!empty($_GET["id"]))
 			{
 				$id=intval($_GET["id"]);
-                //get_employees($id);
-                //echo $_GET["id"];
                 getSensorsID($_GET["id"]);
 			}
 			else
 			{
                 getSensors();
-                echo "Inserted...";
 			}
             break;
         case 'POST':
-            // Insert Product
             insertSensor();
             break; 
         case 'DELETE':
-                // Insert Product
-                deleteSensor();
-                break;                        
+            deleteSensor();
+            break;                        
 		default:
 			// Invalid Request Method
 			header("HTTP/1.0 405 Method Not Allowed");
