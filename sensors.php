@@ -1,5 +1,5 @@
 <?php
-    require "php\database_functions.php";
+    require "php/database_functions.php";
 ?>
 
 <!DOCTYPE html>
@@ -32,16 +32,10 @@
         
     </style>
 
-
-
-
-
-
-
 </head>
 <body>
 
-<?php require_once "layout\header.php"; ?>
+<?php require_once "layout/header.php"; ?>
 
 
 <div class="container-fluid text-center" </div>
@@ -68,7 +62,7 @@
 
 
 
-<?php require_once "layout\afooter.php"; ?>
+<?php require_once "layout/afooter.php"; ?>
 
 
 

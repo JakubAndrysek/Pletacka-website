@@ -1,12 +1,13 @@
 <?php 
-    require_once "php\database_functions.php";
+    require_once "php/database_functions.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="cz">
+<meta charset="utf-8">
 <head>
     <!-- <meta http-equiv="refresh" content="5" > -->
-    <title><?php  echo getSettings("web_name");?></title>
+    <title><?php  //echo getSettings("web_name");?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -33,7 +34,7 @@
 </head>
 <body>
 
-<?php  require_once "layout\header.php"; ?>
+<?php  require_once "layout/header.php"; ?>
 
 
 
@@ -98,7 +99,7 @@
 
 
 
-<?php  require_once "layout\afooter.php"; ?>
+<?php  require_once "layout/afooter.php"; ?>
 
 
 

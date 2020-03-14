@@ -1,5 +1,5 @@
 <?php
-    require_once "php\database_functions.php";
+    require_once "php/database_functions.php";
 ?>
 
 <!DOCTYPE html>
