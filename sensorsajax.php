@@ -1,5 +1,5 @@
 <?php
-    require "php\database_functions.php";
+    require "php/database_functions.php";
 ?>
 
 <!DOCTYPE html>
@@ -23,13 +23,7 @@
             margin: 6px;
             background-color: red;
             border-radius: 50%!important;
-        }
-
-        circle-text {
-            
-        }
-
-        
+        }        
     </style>
 
 
@@ -39,30 +33,20 @@
 
 
 </head>
-<body>
+<body onload="showSensorsTablex('sen')">
 
-<?php require_once "layout\header.php"; ?>
+<?php require_once "layout/header.php"; ?>
 
 
-<div class="container-fluid text-center" </div>
+<div class="container-fluid text-center">
     <h1>Pridani Senzoru</h1>
-    
-    <?php
-                if (isset($zprava))
-                        echo('<p>' . $zprava . '</p>');
-    ?>
+    <h3>Autoload</h3>
+    <div id="sen"></div>
+    <h3>Manualne vyber</h3>
 
-    <form class="form-inline" method="post" action="php/add_sensor.php" >
-        <label for="name">Nazev Senzoru</label>
-        <input type="" class="form-control" placeholder="Senzor-1" name="sensor-name">
-
-        <button type="submit" class="btn btn-primary" >Přidat</button>        
-    </form>
-    <button id="button">Get Text File</button>
-    <div id="text"></div>
-    <div id="tab"></div>
-    <div class="container-fluid text-center p-4 " id="table" </div>
-        
+    <button id="show-sensors-table">Zobraz senzory v tabulce</button>
+    <button id="show-sensors-list">Zobraz senzory v sennamu</button>
+    <div id="sensors"></div>     
         
     </div>
 
@@ -70,48 +54,88 @@
 
 <script>
     // Create event listener
-    document.getElementById('button').addEventListener('click', loadText);
+    document.getElementById('show-sensors-table').addEventListener('click', showSensorsTable);
+    document.getElementById('show-sensors-list').addEventListener('click', showSensorsList);
 
-    function loadText(){
-      // Create XHR Object
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost/pletacka-website/api/v1/sensors.php', true);
+    function showSensorsTablex(outputId){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'api/v1/sensors.php', true);
 
-        console.log('READYSTATE: ', xhr.readyState);
-
-        xhr.onload = function(){
-            if(this.readyState == 4 && this.status == 200)
+      xhr.onload = function(){
+        if(this.status == 200){
+            var sensors = JSON.parse(this.responseText);
+          
+            var output = '';        
+            var output = "<table class=\"table table-striped\"><tr><th>ID</th><th>Name</th><th>Description</th></tr>";
+            for(var i in sensors)
             {
-                document.getElementById('text').innerHTML = this.responseText;
-                var sensors = JSON.parse(this.responseText);
-
-                var output = "<table class=\"table table-striped\"><tr><th>ID</th><th>Name</th><th>Description</th></tr>";
-
-                for(var i in sensors)
-                {
-                    output += 
-                    "<tr><td>" + sensors[i].id + "</td><td>" + sensors[i].name + "</td><td>" + sensors[i].description + "</td></tr>";
-                }
-                
-                output += "</table>";
-
-                document.getElementById("tab").innerHTML = output;
+                output += 
+                "<tr><td>" + sensors[i].id + "</td><td>" + sensors[i].name + "</td><td>" + sensors[i].description + "</td></tr>";
             }
+            output += "</table>";
+
+            document.getElementById(outputId).innerHTML = output;
         }
+      }
+
+    xhr.send();
+    }
 
 
-        xhr.onerror = function(){
-            console.log('Request Error...');
+    function showSensorsTable(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'api/v1/sensors.php', true);
+
+      xhr.onload = function(){
+        if(this.status == 200){
+            var sensors = JSON.parse(this.responseText);
+          
+            var output = '';        
+            var output = "<table class=\"table table-striped\"><tr><th>ID</th><th>Name</th><th>Description</th></tr>";
+            for(var i in sensors)
+            {
+                output += 
+                "<tr><td>" + sensors[i].id + "</td><td>" + sensors[i].name + "</td><td>" + sensors[i].description + "</td></tr>";
+            }
+            output += "</table>";
+
+            document.getElementById('sensors').innerHTML = output;
         }
+      }
+
+    xhr.send();
+    }
 
 
-        xhr.send();
+    function showSensorsList(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'api/v1/sensors.php', true);
+
+      xhr.onload = function(){
+        if(this.status == 200){
+            var sensors = JSON.parse(this.responseText);
+            
+            var output = '';
+            
+            for(var i in sensors){
+                output += '<ul>' +
+                '<li>ID: '+ sensors[i].id+'</li>' +
+                '<li>Name: '+ sensors[i].name+'</li>' +
+                '<li>Name: '+ sensors[i].description +'</li>' +
+                '</ul>';
+            }
+
+            document.getElementById('sensors').innerHTML = output;
+        }
+      }
+
+    xhr.send();
     }
 
   </script>
 
 
-<?php require_once "layout\afooter.php"; ?>
+<?php require_once "layout/afooter.php"; ?>
 
 
 

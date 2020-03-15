@@ -30,7 +30,7 @@
           <a class="nav-link" href="sensors.php">Sensors</a>
           </li>
           <li class="nav-item">
-          <a class="nav-link" href="#">Link 2</a>
+          <a class="nav-link" href="sensorsajax.php">Ajax JSON</a>
           </li>
           <li class="nav-item">
           <a class="nav-link" href="#">Link 3</a>
