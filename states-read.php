@@ -12,16 +12,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-<body onload="showSensorsTable()">
+<body>
 
 <?php require_once "layout/header.php"; ?>
 
 
 <div class="container-fluid text-center">
-    <h1>Vyhledavani Senzoru</h1>
+    <h1>Vypis stavu senzoru</h1>
 
     <form name="testForm" action="" method="">
-      ID senzoru: <input type="text" name="id-sen" id="id-sen" onkeyup="showSensorsTable()">
+      Nazev senzoru: <input type="text" name="id-sen" id="id-sen" onkeyup="showSensorsTable()">
       <input type="button" value="Hledej" onclick="showSensorsTable();">
     </form>
     <br>
@@ -37,27 +37,39 @@
 
       var name = document.getElementById("id-sen").value;
 
-      var url = "api/v1/sensors.php" + "?id=" + name;
+      var url = "api/v1/sensorState.php" + "?name=" + name;
       xhr.open('GET', url, true);
 
       xhr.onload = function(){
         if(this.status == 200){
             var sensors = JSON.parse(this.responseText);
-          
-            var output = '';        
-            var output = "<table class=\"table table-striped\"><tr><th>ID</th><th>Name</th><th>Description</th></tr>";
-            for(var i in sensors)
+            if(sensors.result > 0)
             {
-                output += 
-                "<tr><td>" + sensors[i].id + "</td><td>" + sensors[i].name + "</td><td>" + sensors[i].description + "</td></tr>";
+              document.getElementById('search').className = "";
+              var output = '';        
+              var output = "<table class=\"table table-striped\"><tr><th>ID</th><th>State</th><th>Time</th></tr>";
+              for(var i in sensors)
+              {
+                  if(i != "result"){output += "<tr><td>" + sensors[i].id + "</td><td>" + sensors[i].state + "</td><td>" + sensors[i].time + "</td></tr>";}
+              }
+              output += "</table>";
             }
-            output += "</table>";
-
+            else
+            {
+              document.getElementById('search').className = "alert alert-danger alert-dismissible";
+              output = "There is not any state";
+            }
             document.getElementById('search').innerHTML = output;
+            
         }
       }
 
     xhr.send();
+    }
+
+    if(document.getElementById('search').innerHTML != " ")
+    {
+      setInterval(showSensorsTable, 5000);
     }
 
   </script>

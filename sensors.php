@@ -11,24 +11,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <style>
-        div.my-circle {
-            display: inline-block;
-            width: 70px;
-            height: 70px;
-            margin: 6px;
-            background-color: red;
-            border-radius: 50%!important;
-        }
-
-        circle-text {
-            
-        }
-
-        
-    </style>
-
 </head>
 <body>
 

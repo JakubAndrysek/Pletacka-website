@@ -74,9 +74,8 @@ function insertSensor()
         {
             $sql = "CREATE TABLE $sensor_name (
                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                stav INT(6) NOT NULL DEFAULT '0',
-                upleteno INT(6) NOT NULL DEFAULT '0',                
-                reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                state ENUM('0','1') NOT NULL DEFAULT '0',               
+                time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )";
                 
             if ($mysqli->query($sql) === TRUE) {

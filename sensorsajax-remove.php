@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-<body>
+<body onload="showSensorsTable()">
 
 <?php require_once "layout/header.php"; ?>
 
@@ -22,10 +22,12 @@
 
     <form name="testForm" action="" method="">
       Nazev senzoru: <input type="text" name="id-sen" id="id-sen">
-      <input type="button" value="Pridej" onclick="addSensor();">
+      <input type="button" value="Odeber" onclick="addSensor();">
     </form>
     <br>
     <div id="message"></div>
+    <br>
+    <div id="sen"></div>
 
     
 </div>
@@ -57,11 +59,36 @@
             }
             document.getElementById('message').innerHTML = /*sensor.status + " -> " + */sensor.status_message;
             //document.getElementById('search').innerHTML = "commmand: " + post + "; message: "+this.responseText;
+            showSensorsTable();
         }
       }
       
 
       xhr.send(post);
+    }
+
+    function showSensorsTable(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'api/v1/sensors.php', true);
+
+      xhr.onload = function(){
+        if(this.status == 200){
+            var sensors = JSON.parse(this.responseText);
+          
+            var output = '';        
+            var output = "<table class=\"table table-striped\"><tr><th>ID</th><th>Name</th><th>Description</th></tr>";
+            for(var i in sensors)
+            {
+                output += 
+                "<tr><td>" + sensors[i].id + "</td><td>" + sensors[i].name + "</td><td>" + sensors[i].description + "</td></tr>";
+            }
+            output += "</table>";
+
+            document.getElementById('sen').innerHTML = output;
+        }
+      }
+
+    xhr.send();
     }
 
   </script>
