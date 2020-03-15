@@ -10,23 +10,6 @@
     <title><?php  //echo getSettings("web_name");?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        div.my-circle {
-            display: inline-block;
-            width: 70px;
-            height: 70px;
-            margin: 6px;
-            background-color: red;
-            border-radius: 50%!important;
-        }
-
-        circle-text {
-            
-        }
-
-        
-    </style>
 </head>
 <body>
 
@@ -34,7 +17,7 @@
 
 
 
-<div class="container-fluid x p-4 bg-primary text-white" </div>
+<div class="container-fluid x p-4 bg-primary text-white" >
     <h1 class="display-4">
         <?php  echo getSettings("work_shift_A");?>
     </h2>
@@ -51,7 +34,7 @@
     </div>    
 </div>
 
-<div class="container-fluid text-center p-4 bg-info text-white" </div>
+<div class="container-fluid text-center p-4 bg-info text-white" >
 
     
    

@@ -10,6 +10,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
 
 
 </head>
@@ -31,7 +33,7 @@
           <a class="nav-link" href="sensorsajax.php">Ajax JSON</a>
           </li>
           <li class="nav-item">
-          <a class="nav-link" href="#">Link 3</a>
+          <a class="nav-link" href="sensorsajax-search.php">Ajax JSON Vyhledavani</a>
           </li>
       </ul>
   </nav>
