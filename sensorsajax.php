@@ -10,10 +10,8 @@
     <title><?php echo getSettings("web_name");?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">    
+
 
     <style>
         div.my-circle {
@@ -33,13 +31,17 @@
 
 
 </head>
-<body onload="showSensorsTablex('sen')">
+<body onload="showSensorsTablex(); setInterval(showSensorsTablex, 5000)">
 
 <?php require_once "layout/header.php"; ?>
 
 
 <div class="container-fluid text-center">
     <h1>Pridani Senzoru</h1>
+    <h3>Interval</h3>
+    <p id="demo"></p>
+
+
     <h3>Autoload</h3>
     <div id="sen"></div>
     <h3>Manualne vyber</h3>
@@ -56,8 +58,13 @@
     // Create event listener
     document.getElementById('show-sensors-table').addEventListener('click', showSensorsTable);
     document.getElementById('show-sensors-list').addEventListener('click', showSensorsList);
+    
+    //setInterval(showSensorsTableTimer, 5000);
 
-    function showSensorsTablex(outputId){
+
+
+/*
+    function showSensorsTableTimer(){
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'api/v1/sensors.php', true);
 
@@ -74,7 +81,32 @@
             }
             output += "</table>";
 
-            document.getElementById(outputId).innerHTML = output;
+            document.getElementById('demo').innerHTML = output;
+        }
+      }
+
+    xhr.send();
+    }
+    */
+    
+    function showSensorsTablex(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'api/v1/sensors.php', true);
+
+      xhr.onload = function(){
+        if(this.status == 200){
+            var sensors = JSON.parse(this.responseText);
+          
+            var output = '';        
+            var output = "<table class=\"table table-striped\"><tr><th>ID</th><th>Name</th><th>Description</th></tr>";
+            for(var i in sensors)
+            {
+                output += 
+                "<tr><td>" + sensors[i].id + "</td><td>" + sensors[i].name + "</td><td>" + sensors[i].description + "</td></tr>";
+            }
+            output += "</table>";
+
+            document.getElementById('sen').innerHTML = output;
         }
       }
 
